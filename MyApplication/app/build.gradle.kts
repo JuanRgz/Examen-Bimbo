@@ -48,7 +48,6 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
 
-//    implementation(libs.hil)
     implementation(libs.hilt)
 
     //room
