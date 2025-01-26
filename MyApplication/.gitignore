@@ -13,3 +13,5 @@
 .externalNativeBuild
 .cxx
 local.properties
+/app/src/androidTest/java/com/juanfra/examenbimbo/
+/app/src/test/java/com/juanfra/examenbimbo/
