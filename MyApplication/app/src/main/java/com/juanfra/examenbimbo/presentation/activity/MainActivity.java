@@ -6,6 +6,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
 import com.juanfra.examenbimbo.databinding.ActivityMainBinding;
 import com.juanfra.examenbimbo.presentation.adapter.ListAdapter;
 import com.juanfra.examenbimbo.presentation.utils.OnClickList;
@@ -28,6 +30,8 @@ public class MainActivity extends AppCompatActivity implements OnClickList {
 
         viewModel = new ViewModelProvider(this).get(ListViewModel.class);
         adapter = new ListAdapter(this);
+        bind.rvGames.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        bind.rvGames.setAdapter(adapter);
         viewModel.fetchGames();
 
         viewModel.resultsLiveData.observe(this, data -> {

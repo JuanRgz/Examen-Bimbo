@@ -118,7 +118,7 @@ public class ListViewModel extends ViewModel {
         gameEntity.releaseDate = res.getReleaseDate();
         gameEntity.freetogameProfileUrl = res.getFreetogameProfileUrl();
 
-        saveGames(new GameEntity());
+        saveGames(gameEntity);
     }
 
     public void saveGames(GameEntity gameEntity) {
