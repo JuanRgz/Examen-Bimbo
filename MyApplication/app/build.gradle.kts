@@ -36,7 +36,10 @@ android {
         jvmTarget = "1.8"
     }
     buildFeatures {
-        true.also { viewBinding = it }
+        true.also {
+            viewBinding = it
+            dataBinding = it
+        }
     }
 }
 
@@ -82,7 +85,11 @@ dependencies {
     annotationProcessor(libs.androidx.room.compiler)
     ksp(libs.hilt.android.compiler)
 
-    // RXJava 3
-    implementation(libs.rxJava3)
-    implementation(libs.rxJavaAndroid3)
+    // RXJava 2
+    /*implementation(libs.rxJava2)
+    implementation(libs.androidx.room.rxj2)*/
+    implementation(libs.glide)
+    implementation("io.reactivex.rxjava2:rxandroid:2.1.1")
+    implementation("androidx.room:room-rxjava2:2.6.1")
+    implementation("com.squareup.retrofit2:adapter-rxjava2:2.4.0")
 }

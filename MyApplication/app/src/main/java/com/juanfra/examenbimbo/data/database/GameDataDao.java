@@ -1,21 +1,23 @@
 package com.juanfra.examenbimbo.data.database;
 
-import android.database.Observable;
+import io.reactivex.Observable;
 
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
-
 import java.util.List;
 
 @Dao
 public interface GameDataDao {
     @Insert
-    void insert(Game game);
+    void insert(GameEntity gameEntity);
 
-    @Query("DELETE FROM " + Game.TABLE_NAME)
-    void DeleteAll();
+    /*@Query("SELECT * FROM " + Game.TABLE_NAME + " WHERE game_id = :gameId")
+    Observable<Game> getGame(Long gaameId);*/
 
-    @Query("SELECT * FROM " + Game.TABLE_NAME)
-    Observable<List<Game>> fetchGames();
+    @Query("DELETE FROM " + GameEntity.TABLE_NAME)
+    void deleteAll();
+
+    @Query("SELECT * FROM " + GameEntity.TABLE_NAME)
+    Observable<List<GameEntity>> fetchGames();
 }

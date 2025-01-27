@@ -15,6 +15,7 @@ import dagger.hilt.components.SingletonComponent;
 @InstallIn(SingletonComponent.class)
 @Module
 public class DatabaseModule {
+    @Provides
     GameDataBase provideAppDatabase(@ApplicationContext Context appContext){
         return Room.databaseBuilder(
                 appContext,
