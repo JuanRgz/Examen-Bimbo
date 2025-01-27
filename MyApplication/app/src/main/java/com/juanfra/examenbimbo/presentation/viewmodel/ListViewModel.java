@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel;
 import com.juanfra.examenbimbo.data.database.GameEntity;
 import com.juanfra.examenbimbo.domain.model.GameModel;
 import com.juanfra.examenbimbo.domain.usecase.DeleteGamesUseCase;
+import com.juanfra.examenbimbo.domain.usecase.FetchGamesUseCase;
 import com.juanfra.examenbimbo.domain.usecase.GetGamesUseCase;
 import com.juanfra.examenbimbo.domain.usecase.SaveGamesUseCase;
 
@@ -26,6 +27,7 @@ public class ListViewModel extends ViewModel {
     private GetGamesUseCase getGamesUseCase;
     private DeleteGamesUseCase deleteGamesUseCase;
     private SaveGamesUseCase saveGamesUseCase;
+    private FetchGamesUseCase fetchGamesUseCase;
 
     public MutableLiveData<String> errorLiveData = new MutableLiveData<>();
     public MutableLiveData<List<GameModel>> gameLiveData = new MutableLiveData<>();
@@ -34,10 +36,12 @@ public class ListViewModel extends ViewModel {
     @Inject
     public ListViewModel(GetGamesUseCase getGamesUseCase,
                          DeleteGamesUseCase deleteGamesUseCase,
-                         SaveGamesUseCase saveGamesUseCase){
+                         SaveGamesUseCase saveGamesUseCase,
+                         FetchGamesUseCase fetchGamesUseCase){
         this.getGamesUseCase = getGamesUseCase;
         this.deleteGamesUseCase = deleteGamesUseCase;
         this.saveGamesUseCase = saveGamesUseCase;
+        this.fetchGamesUseCase = fetchGamesUseCase;
     }
 
     public void getGames(){
@@ -47,9 +51,9 @@ public class ListViewModel extends ViewModel {
                 .subscribe(
                         result -> {
                             deleteGames();
-                            ArrayList<GameModel> gameDomainArrayList = new ArrayList<>();
+                            ArrayList<GameModel> gameList = new ArrayList<>();
                             for (GameModel res:result) {
-                                gameDomainArrayList.add(new GameModel(
+                                gameList.add(new GameModel(
                                         res.getId(),
                                         res.getTitle(),
                                         res.getThumbnail(),
@@ -64,22 +68,23 @@ public class ListViewModel extends ViewModel {
                                 ));
                                 saveGame(res);
                             }
-                            resultsLiveData.postValue(gameDomainArrayList);
+                            resultsLiveData.postValue(gameList);
                         },
                         error -> errorLiveData.postValue("Error occurred: ")
                 ));
     }
 
     public void fetchGames(){
-        disposables.add(getGamesUseCase.getGames()
+        disposables.add(fetchGamesUseCase.fetchGames()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         result -> {
                             deleteGames();
-                            ArrayList<GameModel> gameDomainArrayList = new ArrayList<>();
-                            for (GameModel res:result) {
-                                gameDomainArrayList.add(new GameModel(
+                            ArrayList<GameModel> gameList = new ArrayList<>();
+
+                            for (GameEntity res:result) {
+                                GameModel gameModel = new GameModel(
                                         res.getId(),
                                         res.getTitle(),
                                         res.getThumbnail(),
@@ -91,10 +96,11 @@ public class ListViewModel extends ViewModel {
                                         res.getDeveloper(),
                                         res.getReleaseDate(),
                                         res.getFreetogameProfileUrl()
-                                ));
-                                saveGame(res);
+                                );
+                                gameList.add(gameModel);
+                                saveGame(gameModel);
                             }
-                            resultsLiveData.postValue(gameDomainArrayList);
+                            resultsLiveData.postValue(gameList);
                         },
                         error -> errorLiveData.postValue("Error occurred: ")
                 ));
