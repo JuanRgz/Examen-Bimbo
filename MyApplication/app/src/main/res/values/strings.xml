@@ -5,4 +5,10 @@
     <string name="user">Usuario</string>
     <string name="Continue">Continuar</string>
     <string name="saved_name">name</string>
+    <string name="titulo">Titulo</string>
+    <string name="descripcion">Descripción</string>
+    <string name="developer">Desarrollador</string>
+    <string name="genre">Genero</string>
+    <string name="platform">Plataforma</string>
+    <string name="publisher">Editor</string>
 </resources>

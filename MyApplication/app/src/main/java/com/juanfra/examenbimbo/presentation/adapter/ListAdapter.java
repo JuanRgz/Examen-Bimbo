@@ -9,6 +9,7 @@ import androidx.databinding.ViewDataBinding;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.juanfra.examenbimbo.R;
 import com.juanfra.examenbimbo.databinding.ListItemBinding;
 import com.juanfra.examenbimbo.domain.model.GameModel;
@@ -62,9 +63,9 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         }
 
         public void onBind(GameModel item) {
-            listItem.tvName.setText(item.getShortDescription());
+            listItem.tvName.setText(item.getTitle());
             Glide.with(listItem.ivLogo).load(item.getThumbnail()).into(listItem.ivLogo);
-            itemView.setOnClickListener(v -> onClickList.goToView(item.getId(), v));
+            itemView.setOnClickListener(v -> onClickList.goToView(new Gson().toJson(item), v));
         }
 
     }
