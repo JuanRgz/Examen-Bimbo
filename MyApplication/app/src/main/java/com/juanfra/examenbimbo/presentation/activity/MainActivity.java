@@ -36,15 +36,14 @@ public class MainActivity extends AppCompatActivity implements OnClickList {
         bind.rvGames.setLayoutManager(new GridLayoutManager(this, 2));
         bind.rvGames.setAdapter(adapter);
         bind.pbLoading.setVisibility(View.VISIBLE);
-        viewModel.fetchGames();
+        viewModel.getGames();
 
         viewModel.resultsLiveData.observe(this, data -> {
             adapter.addData(data);
             bind.pbLoading.setVisibility(View.GONE);
         });
         viewModel.errorLiveData.observe(this, error -> {
-            Toast.makeText(this, "Error " + error, Toast.LENGTH_SHORT).show();
-            bind.pbLoading.setVisibility(View.GONE);
+            viewModel.fetchGames();
         });
 
         viewModel.gameLiveData.observe(this, s-> {
